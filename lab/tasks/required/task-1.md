@@ -24,10 +24,8 @@ Alternatively, choose another full-stack product with at least a million users. 
 
 ### 3. Find the diagrams
 
-> [!WARNING]
+> [!IMPORTANT]
 > System architecture diagrams represent the system architecture but they are not the [system architecture](https://github.com/inno-se/the-guide?tab=readme-ov-file#architecture).
-
-> [!WARNING]
 >
 > The provided architecture diagrams are based on educated guesses since the products in the list are mostly closed-source.
 > All diagrams were generated via Gemini 3 Pro (free web version) and edited by the course instructors.
