@@ -51,11 +51,11 @@ We intentionally skip advanced REST topics (HATEOAS, versioning strategy, cachin
 
 ## Story
 
-> "The prototype works and is deployed.
-> Now we need to move it meaningfully closer to production:
+> "The prototype works and is deployed (Lab 2).
+> Now we need to make it production-ready:
 > strengthen the API contract, expose interaction logs,
 > add item-outcome mappings, implement and test mastery,
-> and deploy the service on a hardened VM."
+> secure the service, and deploy it on a hardened VM."
 
 ---
 
@@ -73,12 +73,16 @@ Goal: understand API contracts before implementation work.
 
 ---
 
-### Task 2: Implement interaction log endpoints (by example)
+### Task 2: Implement interaction log read endpoint (by example)
 
 Students implement:
 
 - `GET /interactions` (filters + pagination)
-- `POST /interactions` (validated insert)
+
+Data flow note:
+
+- Interaction records are imported from autochecker logs.
+- Students do not implement `POST /interactions` in Lab 3.
 
 Goal: first independent endpoint implementation by copying established project patterns.
 
