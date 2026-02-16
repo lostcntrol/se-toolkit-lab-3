@@ -91,3 +91,36 @@ In simple words, you should be able to say:
 1. [Implement the `/outcomes` endpoint](./lab/tasks/optional/task-1.md)
 2. [Make your VM a proxy to your partner's web server](./lab/tasks/optional/task-2.md)
 3. [Implement the post-order traversal](./lab/tasks/optional/task-3.md)
+
+## Resolved Planning Decisions (Lab 3 redesign)
+
+These decisions answer the current planning open questions for the upcoming Lab 3 scope.
+
+1. Hardening depth:
+   We require baseline hardening in Lab 3:
+   - `PermitRootLogin no`
+   - `PasswordAuthentication no`
+   - non-root SSH user for operations
+   - `ufw` enabled with required ports only
+   - `fail2ban` enabled for SSH
+
+2. Checkbot restrictions:
+   In Lab 3, `checkbot` must be a dedicated no-sudo, key-only user.
+   Command-restricted SSH keys can be added in Lab 4 if Lab 3 scope gets too heavy.
+
+3. CI placement:
+   CI is planned for Lab 4.
+
+4. Security model:
+   Lab 3 uses one shared API key for protected API resources.
+   This is intentionally the simplest security model (no roles/permissions matrix in Lab 3).
+
+5. Task split:
+   Security is split across two tasks:
+   - Task 5: API-key security
+   - Task 6: VM hardening
+   Deployment remains a separate final task.
+
+6. Scope split if overloaded:
+   - Lab 3 must keep API-key auth (single key, no roles).
+   - Advanced hardening details and CI can move to Lab 4 when needed.

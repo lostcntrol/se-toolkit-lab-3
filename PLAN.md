@@ -31,7 +31,7 @@ We start from a seeded backend:
 2. Teach REST as a minimal practical contract, not theory-heavy architecture.
 3. Reuse existing endpoint patterns for first feature work.
 4. Keep one business-logic task (mastery) as the main challenge.
-5. Treat security as both app-level (auth/permissions) and server-level (hardening).
+5. Treat security as both app-level (simple API key) and server-level (hardening).
 
 ---
 
@@ -41,7 +41,7 @@ Students must understand and apply:
 
 - Noun-based resource paths (`/interactions`, `/verifications`)
 - Core methods (`GET`, `POST`, `PUT`)
-- Core statuses (`200`, `201`, `400/422`, `404`, `401`, `403`)
+- Core statuses (`200`, `201`, `400/422`, `404`, `401`)
 - Query filters + pagination basics
 - Request/response schemas via Pydantic
 
@@ -162,17 +162,36 @@ Potential tests (students implement):
 
 ---
 
-### Task 5: Security task (auth/permissions + VM hardening)
+### Task 5: Add API-key security (simplest model)
 
-This is one combined security task.
+App security in this lab is intentionally minimal.
 
-App security:
+Students implement:
 
-- Add API-key authentication for write operations
-- Add simple permission checks (read vs write/admin behavior)
-- Return proper auth statuses (`401`, `403`)
+- One shared API key for protected API resources
+- Request authentication by key (no user accounts, no roles, no permissions matrix)
+- Proper unauthorized response (`401`) when key is missing or invalid
 
-Server security:
+Note:
+
+- This is the simplest type of API security and is enough for Lab 3.
+- More advanced auth (roles, JWT, per-user tokens) can come later.
+
+Potential tests (provided by instructors):
+
+- Access to protected endpoint without key returns `401`.
+- Access with invalid key returns `401`.
+- Access with valid key succeeds (`200` / `201` depending on endpoint).
+
+Potential tests (students implement):
+
+- API-key tests for missing key, invalid key, and valid key behavior.
+
+---
+
+### Task 6: Harden the VM
+
+Students implement baseline server hardening:
 
 - Create non-root SSH user for operations
 - Configure firewall (`ufw`)
@@ -180,16 +199,14 @@ Server security:
 - Disable root password login
 - Create dedicated `checkbot` SSH user (restricted, no sudo)
 
-Goal: connect API security and infrastructure security in one coherent task.
+Goal: establish baseline operational security for deployment.
 
 Scope note:
 
-- If this task is too heavy, server hardening can be moved to Lab 4 while keeping API-key auth in Lab 3.
+- If this task is too heavy, hardening details can move to Lab 4 while keeping API-key auth in Lab 3.
 
 Potential tests (provided by instructors):
 
-- Write endpoints without API key return `401`.
-- Write endpoints with invalid/insufficient key return `403`.
 - VM hardening checks via `checkbot` SSH:
   - `checkbot` has no sudo access
   - `fail2ban` is active
@@ -197,16 +214,15 @@ Potential tests (provided by instructors):
 
 Potential tests (students implement):
 
-- API auth tests for write endpoints (missing key, invalid key, valid key).
-- Permission tests separating read vs write behavior.
+- Basic verification script/checklist proving hardening settings are active.
 
 ---
 
-### Task 6: Deploy to hardened VM
+### Task 7: Deploy to hardened VM
 
 Students deploy the updated service to their VM and verify:
 
-- Public read endpoints work
+- Protected/read endpoints work with API key
 - Mastery endpoint works
 - Security configuration remains active after deployment
 
@@ -240,6 +256,6 @@ Command-restricted SSH key now, or in a later lab?
 CI checks are a good candidate for Lab 4 if Lab 3 scope gets tight.
 
 4. Scope pressure:
-If needed, split Task 5:
-- Lab 3: API-key auth + minimal permissions
+If needed, keep Task 5 required in Lab 3 and move part of Task 6 to Lab 4:
+- Lab 3: API-key auth (single key, no roles)
 - Lab 4: full hardening checklist + CI
