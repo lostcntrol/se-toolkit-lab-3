@@ -16,6 +16,7 @@ def run_server():
         host=settings.address,
         port=settings.port,
         reload=settings.reload,
+        reload_dirs=[str(src_dir)],
     )
 
 
